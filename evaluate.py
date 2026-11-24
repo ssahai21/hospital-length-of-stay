@@ -18,9 +18,31 @@ SEED = 42
 DEFAULT_DATA = Path(__file__).resolve().parent / "data" / "dirty_v3_path.csv"
 
 
+def summarize_errors(actual, predictions):
+    # Positive signed error means the model predicted a longer stay.
+    signed_error = predictions - actual
+    groups = pd.cut(
+        actual,
+        bins=[float("-inf"), 3, 7, float("inf")],
+        labels=["Up to 3 days", ">3 to 7 days", "Over 7 days"],
+    )
+    return (
+        pd.DataFrame({"Stay": groups, "Absolute error": signed_error.abs(), "Signed error": signed_error})
+        .groupby("Stay", observed=True)
+        .agg(
+            Rows=("Signed error", "size"),
+            MAE=("Absolute error", "mean"),
+            Bias=("Signed error", "mean"),
+        )
+    )
+
+
 def main():
     parser = argparse.ArgumentParser(description="Evaluate hospital length-of-stay models.")
     parser.add_argument("--data", type=Path, default=DEFAULT_DATA)
+    parser.add_argument(
+        "--by-stay", action="store_true", help="Report errors by actual stay length."
+    )
     args = parser.parse_args()
     if not args.data.is_file():
         parser.error(f"CSV not found at {args.data}. See README.md for the download link.")
@@ -44,8 +66,12 @@ def main():
     print(f"Training median: {y_train.median():g} days")
     for name, model in models.items():
         model.fit(X_train, y_train)
-        mae = mean_absolute_error(y_test, model.predict(X_test))
+        predictions = model.predict(X_test)
+        mae = mean_absolute_error(y_test, predictions)
         print(f"{name}: {mae:.3f} days MAE")
+        if args.by_stay:
+            print(summarize_errors(y_test, predictions).to_string(float_format="{:.3f}".format))
+            print()
 
 
 if __name__ == "__main__":
