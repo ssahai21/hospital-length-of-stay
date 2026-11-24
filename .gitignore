@@ -3,3 +3,6 @@ healthcareData.xlsx
 .venv/
 __pycache__/
 .ipynb_checkpoints/
+# macOS system files
+**/.DS_Store
+**/._.DS_Store
