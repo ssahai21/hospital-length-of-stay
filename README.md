@@ -17,6 +17,12 @@ Download the [Healthcare Risk Factors Dataset](https://www.kaggle.com/datasets/a
 ```bash
 python evaluate.py
 ```
+```bash
+python compare_features.py
+```
+```bash
+python compare_boosting.py
+```
 
 You can also pass `--data /path/to/dirty_v3_path.csv`. The historical Colab notebook used a separate Excel copy.
 
