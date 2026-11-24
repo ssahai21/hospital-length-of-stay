@@ -1,0 +1,5 @@
+data/
+healthcareData.xlsx
+.venv/
+__pycache__/
+.ipynb_checkpoints/
