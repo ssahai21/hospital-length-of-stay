@@ -1,0 +1,244 @@
+{
+  "analysis_status": "exploratory",
+  "reason": "The held-out split was previously inspected.",
+  "reference_model": "Original unweighted random forest",
+  "methods": {
+    "seed": 42,
+    "test_size": 0.2,
+    "permutation": "Two-sided paired permutation of absolute losses on actual stays over seven days",
+    "permutation_resamples": 49999,
+    "multiple_testing": "Holm across all length-of-stay comparisons against the reference",
+    "holm_comparisons": 15,
+    "bootstrap": "Paired row resampling with replacement, 95% percentile intervals, conditional on fitted models",
+    "bootstrap_resamples": 9999,
+    "difference_direction": "Model MAE minus forest MAE; negative favors the model",
+    "signed_error_direction": "Prediction minus actual"
+  },
+  "subgroup_counts": {
+    "training_total": 24000,
+    "held_out_total": 6000,
+    "held_out_up_to_3_days": 2530,
+    "held_out_over_3_through_7_days": 2952,
+    "held_out_over_7_days": 518
+  },
+  "length_of_stay_models": {
+    "Original unweighted random forest": {
+      "overall_mae_days": 1.6387916666666666,
+      "long_stay_mae_days": 5.209671814671814,
+      "long_stay_signed_error_days": -5.186621621621621
+    },
+    "Training-median baseline": {
+      "overall_mae_days": 1.8578333333333332,
+      "long_stay_mae_days": 6.938223938223938,
+      "long_stay_signed_error_days": -6.938223938223938,
+      "long_stay_mae_difference_vs_forest_days": 1.7285521235521235,
+      "paired_bootstrap_95_ci_days": [
+        1.6163108108108108,
+        1.8432750965250964
+      ],
+      "p_value_raw": 4e-05,
+      "p_value_holm": 0.0006000000000000001
+    },
+    "Random forest with median imputation": {
+      "overall_mae_days": 1.6412983333333335,
+      "long_stay_mae_days": 5.201119691119691,
+      "long_stay_signed_error_days": -5.174710424710424,
+      "long_stay_mae_difference_vs_forest_days": -0.008552123552123576,
+      "paired_bootstrap_95_ci_days": [
+        -0.040096525096525115,
+        0.021719111969111964
+      ],
+      "p_value_raw": 0.59124,
+      "p_value_holm": 1.0
+    },
+    "Random forest, labs and vitals": {
+      "overall_mae_days": 1.7876599999999998,
+      "long_stay_mae_days": 5.66492277992278,
+      "long_stay_signed_error_days": -5.6577413127413125,
+      "long_stay_mae_difference_vs_forest_days": 0.4552509652509653,
+      "paired_bootstrap_95_ci_days": [
+        0.33472779922779927,
+        0.5819729729729729
+      ],
+      "p_value_raw": 4e-05,
+      "p_value_holm": 0.0006000000000000001
+    },
+    "Random forest, lifestyle": {
+      "overall_mae_days": 1.7730500000000002,
+      "long_stay_mae_days": 5.749169884169884,
+      "long_stay_signed_error_days": -5.740945945945946,
+      "long_stay_mae_difference_vs_forest_days": 0.5394980694980696,
+      "paired_bootstrap_95_ci_days": [
+        0.4269420849420849,
+        0.6562277992277992
+      ],
+      "p_value_raw": 4e-05,
+      "p_value_holm": 0.0006000000000000001
+    },
+    "Weighted random forest": {
+      "overall_mae_days": 1.6287299999999998,
+      "long_stay_mae_days": 5.211370656370656,
+      "long_stay_signed_error_days": -5.178938223938224,
+      "long_stay_mae_difference_vs_forest_days": 0.0016988416988416865,
+      "paired_bootstrap_95_ci_days": [
+        -0.05378571428571427,
+        0.055985521235521196
+      ],
+      "p_value_raw": 0.9462,
+      "p_value_holm": 1.0
+    },
+    "Vanilla histogram boosting": {
+      "overall_mae_days": 1.602936520722658,
+      "long_stay_mae_days": 5.391487046605894,
+      "long_stay_signed_error_days": -5.383045723928082,
+      "long_stay_mae_difference_vs_forest_days": 0.18181523193407825,
+      "paired_bootstrap_95_ci_days": [
+        0.12240758643740236,
+        0.24452429843456466
+      ],
+      "p_value_raw": 4e-05,
+      "p_value_holm": 0.0006000000000000001
+    },
+    "Histogram quantile boosting P50": {
+      "overall_mae_days": 1.56021377440063,
+      "long_stay_mae_days": 5.982127634280592,
+      "long_stay_signed_error_days": -5.982127634280592,
+      "long_stay_mae_difference_vs_forest_days": 0.7724558196087775,
+      "paired_bootstrap_95_ci_days": [
+        0.6698181023098345,
+        0.8780101736492353
+      ],
+      "p_value_raw": 4e-05,
+      "p_value_holm": 0.0006000000000000001
+    },
+    "Histogram quantile boosting P90 (upper estimate)": {
+      "overall_mae_days": 2.7780486866885603,
+      "long_stay_mae_days": 2.8388825527278243,
+      "long_stay_signed_error_days": -2.1519102196770206,
+      "long_stay_mae_difference_vs_forest_days": -2.3707892619439894,
+      "paired_bootstrap_95_ci_days": [
+        -2.5425331518228598,
+        -2.1958854599174575
+      ],
+      "p_value_raw": 4e-05,
+      "p_value_holm": 0.0006000000000000001
+    },
+    "Linear ridge": {
+      "overall_mae_days": 1.6624960971492886,
+      "long_stay_mae_days": 5.703929349835053,
+      "long_stay_signed_error_days": -5.703929349835053,
+      "long_stay_mae_difference_vs_forest_days": 0.49425753516323834,
+      "paired_bootstrap_95_ci_days": [
+        0.3930381678682082,
+        0.5967076261418932
+      ],
+      "p_value_raw": 4e-05,
+      "p_value_holm": 0.0006000000000000001
+    },
+    "Extra Trees": {
+      "overall_mae_days": 1.6324583333333333,
+      "long_stay_mae_days": 5.2312162162162155,
+      "long_stay_signed_error_days": -5.228938223938224,
+      "long_stay_mae_difference_vs_forest_days": 0.021544401544401497,
+      "paired_bootstrap_95_ci_days": [
+        -0.030733590733590745,
+        0.07357239382239374
+      ],
+      "p_value_raw": 0.41412,
+      "p_value_holm": 1.0
+    },
+    "Poisson histogram boosting": {
+      "overall_mae_days": 1.607120955875529,
+      "long_stay_mae_days": 5.35114333113418,
+      "long_stay_signed_error_days": -5.3398076339841145,
+      "long_stay_mae_difference_vs_forest_days": 0.1414715164623654,
+      "paired_bootstrap_95_ci_days": [
+        0.07753018719839652,
+        0.2073478072036921
+      ],
+      "p_value_raw": 4e-05,
+      "p_value_holm": 0.0006000000000000001
+    },
+    "Spline ridge": {
+      "overall_mae_days": 1.6354373196295917,
+      "long_stay_mae_days": 5.491522361680626,
+      "long_stay_signed_error_days": -5.491522361680626,
+      "long_stay_mae_difference_vs_forest_days": 0.2818505470088103,
+      "paired_bootstrap_95_ci_days": [
+        0.19734064627761955,
+        0.36765918111040946
+      ],
+      "p_value_raw": 4e-05,
+      "p_value_holm": 0.0006000000000000001
+    },
+    "Direct MLP": {
+      "overall_mae_days": 1.624312242645474,
+      "long_stay_mae_days": 5.178447171920085,
+      "long_stay_signed_error_days": -5.168531867915349,
+      "long_stay_mae_difference_vs_forest_days": -0.031224642751729675,
+      "paired_bootstrap_95_ci_days": [
+        -0.09496976024732592,
+        0.03337464687492827
+      ],
+      "p_value_raw": 0.34776,
+      "p_value_holm": 1.0
+    },
+    "Two-stage with boosting classifier": {
+      "overall_mae_days": 1.6001255526697526,
+      "long_stay_mae_days": 5.357434685367461,
+      "long_stay_signed_error_days": -5.346447805334577,
+      "long_stay_mae_difference_vs_forest_days": 0.1477628706956469,
+      "paired_bootstrap_95_ci_days": [
+        0.08042532305639351,
+        0.21528948366074158
+      ],
+      "p_value_raw": 4e-05,
+      "p_value_holm": 0.0006000000000000001
+    },
+    "Two-stage with MLP classifier": {
+      "overall_mae_days": 1.603094625661682,
+      "long_stay_mae_days": 5.231826722239121,
+      "long_stay_signed_error_days": -5.203854683339768,
+      "long_stay_mae_difference_vs_forest_days": 0.022154907567304958,
+      "paired_bootstrap_95_ci_days": [
+        -0.0482879971547025,
+        0.0930958441569856
+      ],
+      "p_value_raw": 0.54732,
+      "p_value_holm": 1.0
+    }
+  },
+  "upper_quantile_diagnostics": {
+    "model": "Histogram quantile boosting P90 (upper estimate)",
+    "overall_exceedance_rate": 0.112,
+    "long_stay_exceedance_rate": 0.7953667953667953,
+    "pinball_loss_days": 0.4641123900883281,
+    "interpretation": "P90 is an upper estimate; judge its quantile performance using exceedance and pinball loss."
+  },
+  "long_stay_classifiers": {
+    "held_out_prevalence": 0.08633333333333333,
+    "models": {
+      "Histogram gradient boosting classifier": {
+        "average_precision": 0.24032791534743805,
+        "paired_bootstrap_95_ci": [
+          0.20938858778122268,
+          0.2783604115092052
+        ]
+      },
+      "MLP classifier (32, 16)": {
+        "average_precision": 0.2632896877004009,
+        "paired_bootstrap_95_ci": [
+          0.22952894557347306,
+          0.30018988303190214
+        ]
+      }
+    },
+    "mlp_minus_boosting": {
+      "average_precision_difference": 0.022961772352962845,
+      "paired_bootstrap_95_ci": [
+        0.0006384804417079476,
+        0.042640949074297954
+      ]
+    }
+  }
+}
